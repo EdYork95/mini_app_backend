@@ -1,10 +1,20 @@
+mod db;
+mod domain;
+mod handlers;
+mod repository;
 mod routes;
 
+use axum::{routing::get, Router};
 use dotenvy::dotenv;
-use std::env;
+use handlers::posts::get_post::get_all_posts;
+use std::{env, sync::Arc};
 
 use deadpool_diesel::postgres::{Manager, Pool};
 use tokio::net::TcpListener;
+
+struct AppState {
+    db: Pool,
+}
 
 #[tokio::main]
 async fn main() {
@@ -14,15 +24,18 @@ async fn main() {
 
     // connect to db
     let manager = Manager::new(db_url.to_string(), deadpool_diesel::Runtime::Tokio1);
-
     let pool = Pool::builder(manager).build().unwrap();
 
-    let _ = pool.get().await.unwrap();
-
     // start server
+    let shared_state = Arc::new(AppState { db: pool });
+
+    let routes = Router::new()
+        .route("/posts", get(get_all_posts))
+        .with_state(shared_state);
+
     let listener = TcpListener::bind("127.0.0.1:8080").await.unwrap();
     println!("->> LISTENING on {:?}\n", listener.local_addr());
-    axum::serve(listener, routes::handler_hello().into_make_service())
+    axum::serve(listener, routes.into_make_service())
         .await
         .unwrap();
 }
