@@ -4,9 +4,8 @@ mod handlers;
 mod repository;
 mod routes;
 
-use axum::{routing::get, Router};
+use axum::Router;
 use dotenvy::dotenv;
-use handlers::posts::get_post::get_all_posts;
 use std::{env, sync::Arc};
 
 use deadpool_diesel::postgres::{Manager, Pool};
@@ -26,12 +25,10 @@ async fn main() {
     let manager = Manager::new(db_url.to_string(), deadpool_diesel::Runtime::Tokio1);
     let pool = Pool::builder(manager).build().unwrap();
 
-    // start server
+    // // start server
     let shared_state = Arc::new(AppState { db: pool });
 
-    let routes = Router::new()
-        .route("/posts", get(get_all_posts))
-        .with_state(shared_state);
+    let routes = Router::new().merge(routes::all_routes(shared_state));
 
     let listener = TcpListener::bind("127.0.0.1:8080").await.unwrap();
     println!("->> LISTENING on {:?}\n", listener.local_addr());
