@@ -1,6 +1,12 @@
-use crate::{db::schema::posts, domain::models::post::PostModel};
+use crate::{
+    db::schema::posts,
+    domain::{
+        errors::infra_error::{adapt_infra_error, InfrastructureError},
+        models::post::PostModel,
+    },
+};
 use chrono::NaiveDateTime;
-use deadpool_diesel::{postgres::Pool, InteractError};
+use deadpool_diesel::postgres::Pool;
 use diesel::{QueryDsl, Queryable, RunQueryDsl, Selectable, SelectableHelper};
 use uuid::Uuid;
 
@@ -15,20 +21,21 @@ pub struct PostDb {
     pub date_created: NaiveDateTime,
 }
 
-pub async fn get_all(pool: &Pool) -> Result<Vec<PostModel>, InteractError> {
-    let conn = pool.get().await.unwrap();
-    let res: Result<Vec<PostDb>, _> = conn
+pub async fn get_all(pool: &Pool) -> Result<Vec<PostModel>, InfrastructureError> {
+    let conn = pool.get().await.map_err(adapt_infra_error)?;
+
+    let res = conn
         .interact(|conn| {
             let query = posts::table.into_boxed::<diesel::pg::Pg>();
             // Select the posts matching the query
             query.select(PostDb::as_select()).load::<PostDb>(conn)
         })
         .await
-        .unwrap();
+        .map_err(adapt_infra_error)? // return type is nested Result<Result<>>
+        .map_err(adapt_infra_error)?;
 
     // Handle the result of the query
     let posts: Vec<PostModel> = res
-        .unwrap()
         .into_iter()
         .map(|post_db| adapt_post_db_to_post(post_db))
         .collect();
