@@ -1,4 +1,4 @@
-pub mod db;
-pub mod domain;
+mod db;
+mod repository;
 pub mod handlers;
-pub mod repository;
+pub mod domain;

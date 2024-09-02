@@ -5,10 +5,8 @@ edition = "2021"
 
 [dependencies]
 axum = "0.7.5"
-chrono = { version = "0.4.38", features = ["serde"] }
 deadpool-diesel = {version = "0.6.1", features = ["postgres"] }
-diesel = { version = "2.2.3", features = ["postgres", "uuid", "chrono"] }
+diesel = "2.2.3"
 dotenvy = "0.15.7"
-serde = { version ="1.0.209", features = ["derive"] }
-tokio = { version = "1.39.3", features = ["full"] }
-uuid = { version = "1.4", features = ["serde"] }
+serde = "1.0.209"
+tokio = { version = "1.39.3" , features = ["full"] }
