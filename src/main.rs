@@ -30,7 +30,8 @@ async fn main() {
 
     let routes = Router::new().merge(routes::all_routes(shared_state));
 
-    let listener = TcpListener::bind("127.0.0.1:8080").await.unwrap();
+    // start server
+    let listener = TcpListener::bind("0.0.0.0:8080").await.unwrap();
     println!("->> LISTENING on {:?}\n", listener.local_addr());
     axum::serve(listener, routes.into_make_service())
         .await

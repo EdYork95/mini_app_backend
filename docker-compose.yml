@@ -1,0 +1,35 @@
+services:
+  # Define the PostgreSQL container
+  postgres:
+    image: postgres:14
+    container_name: rust_postgres_db
+    user: postgres
+    env_file:
+      - .env
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_DB: miniatures_app
+    ports:
+      - "5432:5432"
+    volumes: db-data:/var/lib/postgresql/data
+    networks:
+      - mynetwork
+
+  # Define the Rust web application container
+  web:
+    build:
+      context: .
+    container_name: mini_app_backend
+    image: mini_app_backend
+    env_file:
+      - .env
+    depends_on:
+      - postgres
+    ports:
+      - "8080:8080"
+    networks:
+      - mynetwork
+
+networks:
+  mynetwork:
+    driver: bridge
