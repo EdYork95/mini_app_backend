@@ -3,10 +3,13 @@ services:
   postgres:
     image: postgres:14
     container_name: rust_postgres_db
+    user: postgres
+    env_file:
+      - .env
     environment:
       POSTGRES_USER: admin
       POSTGRES_PASSWORD: password
-      POSTGRES_DB: mydb
+      POSTGRES_DB: miniatures_app
     ports:
       - "5432:5432"
     networks:
@@ -17,7 +20,9 @@ services:
     build:
       context: .
     container_name: mini_app_backend
-    image: drendri/mini_app_backend
+    image: mini_app_backend
+    env_file:
+      - .env
     depends_on:
       - postgres
     ports:

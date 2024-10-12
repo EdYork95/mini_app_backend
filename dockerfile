@@ -1,22 +1,19 @@
 # Start from an official Rust image
-FROM rust:1.81.0 as builder
+FROM rust:1.81.0
 
 WORKDIR /mini_app_backend
 
-
 COPY . .
-
-RUN cargo build --release
-
-FROM debian:bookworm
 
 RUN apt-get update
 
-RUN apt-get install postgresql -y
+RUN apt install -y libpq-dev
+
+RUN cargo install diesel_cli --no-default-features --features postgres
 
 RUN apt-get install -y libssl-dev ca-certificates && rm -rf /var/lib/apt/lists/*
 
-COPY --from=builder /mini_app_backend/target/release/mini_app_backend /usr/local/bin/mini_app_backend
+COPY /target/release/mini_app_backend /usr/local/bin/mini_app_backend
 
 EXPOSE 8080
 
