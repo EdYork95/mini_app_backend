@@ -7,11 +7,10 @@ services:
     env_file:
       - .env
     environment:
-      POSTGRES_USER: admin
+      POSTGRES_USER: postgres
       POSTGRES_DB: miniatures_app
     ports:
       - "5432:5432"
-    volumes: db-data:/var/lib/postgresql/data
     networks:
       - mynetwork
 

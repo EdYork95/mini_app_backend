@@ -1,0 +1,11 @@
+INSERT INTO posts (id, body, imageurl, date_created) VALUES
+('d63fdf45-bf1e-411d-92d2-bc53c92189c3', 'The Vindictor Prime leads his squad to victory!', 'https://www.warhammer.com/app/resources/catalog/product/920x950/99120218061_SCEVindicatorsLead.jpg', '2024-09-25 14:23:00'),
+('22e2f5da-df2e-46a4-82e1-c5edc332345a', 'A Knight-Arcanum unleashes arcane fury upon their foes.', 'https://www.warhammer.com/app/resources/catalog/product/920x950/99120218093_SCEKnightArcanum1.jpg', '2024-09-24 11:45:30'),
+('87bff032-31c2-445e-87cd-c5b5641b56f4', 'The Orruk Killaboss swings his mighty flail.', 'https://www.warhammer.com/app/resources/catalog/product/920x950/99120209078_ORKGobsprakktheMouthofMorkLeadALT.jpg', '2024-09-20 09:12:10'),
+('743cde76-7893-4b55-9e3f-a43502bb1942', 'Praetors in shining armor, defenders of Sigmar’s will.', 'https://www.warhammer.com/app/resources/catalog/product/920x950/99120218062_SCEPraetorsLead.jpg', '2024-09-30 17:30:45'),
+('2f3c78ba-7430-47d1-a82b-14672048bca9', 'Blades of Khorne revel in the carnage.', 'https://www.warhammer.com/app/resources/catalog/product/920x950/99120201147_BoKVanguard2.jpg', '2024-09-18 10:15:20'),
+('f80de914-c2b8-4fa2-85f4-d38a5b829e93', 'Sylvaneth Tree-Revenants emerge from the forests.', 'https://www.warhammer.com/app/resources/catalog/product/920x950/99120204016_TreeRevenant01.jpg', '2024-09-12 16:45:00'),
+('d12650e9-63f7-40b6-b5a7-3dffed4b5261', 'Nighthaunt wraiths sweeping over the battlefield.', 'https://www.warhammer.com/app/resources/catalog/product/920x950/99070207018_NHCairnWraithLead.jpg', '2024-09-22 13:01:55'),
+('7fedeed2-11f4-451b-bb9a-1efb97932616', 'The mighty Kruleboyz charge into battle.', 'https://www.warhammer.com/app/resources/catalog/product/threeSixty/99120209116_WCOrruckWarclansKruleboyzMonstaKillazOTT1360/01-01.jpg', '2024-09-29 18:33:15'),
+('c45dbbd6-2ff3-4d66-a3e2-5b8709b4ad5f', 'The Blightwar begins—Nurgle’s forces on the march.', 'https://www.warhammer.com/app/resources/catalog/product/920x950/99120201041_Blightkings01.jpg', '2024-09-27 21:08:00'),
+('48c9650b-ffb2-4455-8f73-d6fc5c88556a', 'Soul Wars heat up! Stormcast clash with the Nighthaunt.', 'https://www.warhammer.com/app/resources/catalog/product/920x950/99120207115_NHVanguardLead.jpg', '2024-09-26 08:22:40');
