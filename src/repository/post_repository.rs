@@ -21,12 +21,16 @@ pub struct PostDb {
     pub date_created: NaiveDateTime,
 }
 
-pub async fn get_all(pool: &Pool) -> Result<Vec<PostModel>, InfrastructureError> {
+pub async fn get_all(pool: &Pool, offset: i64) -> Result<Vec<PostModel>, InfrastructureError> {
     let conn = pool.get().await.map_err(adapt_infra_error)?;
-
+    println!("repo got offset {}", offset);
     let res = conn
-        .interact(|conn| {
-            let query = posts::table.into_boxed::<diesel::pg::Pg>();
+        .interact(move |conn| {
+            println!("closure offset {}", offset);
+            let query = posts::table
+                .limit(6)
+                .offset(offset)
+                .into_boxed::<diesel::pg::Pg>();
             // Select the posts matching the query
             query.select(PostDb::as_select()).load::<PostDb>(conn)
         })
